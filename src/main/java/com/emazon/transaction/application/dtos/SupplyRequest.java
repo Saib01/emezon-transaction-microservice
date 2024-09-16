@@ -8,4 +8,9 @@ import lombok.Setter;
 public class SupplyRequest {
     Long idProduct;
     Integer amount;
+
+    public SupplyRequest(Long idProduct, Integer amount) {
+        this.idProduct = idProduct;
+        this.amount = amount;
+    }
 }

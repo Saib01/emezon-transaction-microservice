@@ -1,5 +1,6 @@
 package com.emazon.transaction.infraestructure.exceptionhandler;
 
+import com.emazon.transaction.domain.exeption.InvalidIdProductException;
 import com.emazon.transaction.domain.exeption.InvalidSupplyException;
 import com.emazon.transaction.infraestructure.exception.FeignProductNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,8 @@ public class ControllerAdvisor {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(InvalidSupplyException.class)
+    @ExceptionHandler({InvalidSupplyException.class,
+            InvalidIdProductException.class})
     public ResponseEntity<Map<String, String>> handleBadRequestExceptions(RuntimeException ex) {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
