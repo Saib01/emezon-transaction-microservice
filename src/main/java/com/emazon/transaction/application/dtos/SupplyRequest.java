@@ -9,8 +9,8 @@ public class SupplyRequest {
     Long idProduct;
     Integer amount;
 
-    public SupplyRequest(Long idProduct, Integer amount) {
-        this.idProduct = idProduct;
+    public SupplyRequest(Long id, Integer amount) {
+        this.idProduct = id;
         this.amount = amount;
     }
 }

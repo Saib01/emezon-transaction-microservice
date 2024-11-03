@@ -13,9 +13,13 @@ public class InfraestructureRestControllerConstants {
 
     public static final String API_BASE = "/api";
     public static final String SUPPLY = "/supply";
+    public static final String PURCHASE = "/purchase";
     public static final String API_ADD_SUPPLY = String.format("%s%s", API_BASE, SUPPLY);
+    public static final String API_PURCHASE = String.format("%s%s", API_BASE, PURCHASE);
 
+    public static final String COLUMN_CREATED_DATE = "created_date";
     private InfraestructureRestControllerConstants() {
 
     }
+
 }

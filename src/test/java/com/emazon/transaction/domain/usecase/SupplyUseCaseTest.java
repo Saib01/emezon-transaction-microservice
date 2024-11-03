@@ -2,7 +2,6 @@ package com.emazon.transaction.domain.usecase;
 
 import com.emazon.transaction.domain.exeption.InvalidSupplyException;
 import com.emazon.transaction.domain.model.Supply;
-import com.emazon.transaction.domain.spi.ISupplyPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

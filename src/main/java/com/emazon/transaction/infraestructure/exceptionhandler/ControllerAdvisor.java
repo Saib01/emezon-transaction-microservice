@@ -1,8 +1,8 @@
 package com.emazon.transaction.infraestructure.exceptionhandler;
 
-import com.emazon.transaction.domain.exeption.InvalidIdProductException;
-import com.emazon.transaction.domain.exeption.InvalidSupplyException;
-import com.emazon.transaction.infraestructure.exception.FeignProductNotFoundException;
+import com.emazon.transaction.domain.exeption.*;
+import com.emazon.transaction.infraestructure.exception.ConnectionRefusedException;
+import com.emazon.transaction.domain.exeption.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,7 +21,11 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, message));
     }
 
-    @ExceptionHandler(FeignProductNotFoundException.class)
+    @ExceptionHandler({
+            ProductNotFoundException.class,
+            ProductNotFoundInCart.class,
+            ShoppingCartDeletionException.class
+    })
     public ResponseEntity<Map<String, String>> handleNotFoundExceptions(RuntimeException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
@@ -30,5 +34,19 @@ public class ControllerAdvisor {
             InvalidIdProductException.class})
     public ResponseEntity<Map<String, String>> handleBadRequestExceptions(RuntimeException ex) {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+    @ExceptionHandler({
+            ConnectionRefusedException.class
+    })
+    public ResponseEntity<Map<String, String>> handleInternalServerExceptions(RuntimeException ex) {
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            InsufficientStockException.class,
+            ReportRegistrationException.class
+    })
+    public ResponseEntity<Map<String, String>> handleConflictExceptions(RuntimeException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 }
