@@ -50,7 +50,7 @@ public class PurchaseUseCase implements IPurchaseServicePort {
 
     private void saveReport(Purchase purchase, List<Product> productListShoppingCart, List<ShoppingCart> shoppingCartList) {
         if(!this.reportPersistencePort.save(purchase)){
-            fallbackInReport(productListShoppingCart, shoppingCartList);
+            this.fallbackInReport(productListShoppingCart, shoppingCartList);
             throw new ReportRegistrationException(REPORT_REGISTRATION);
         }
         purchase.setStatus(TransactionStatus.SUCCESS);
@@ -87,13 +87,12 @@ public class PurchaseUseCase implements IPurchaseServicePort {
 
 
     private void fallbackInReduceShoppingCart(List<Product> productListShoppingCart) {
-
        this.stockPersistencePort.restoreStockToPreviousStateFallback(productListShoppingCart);
 
     }
     private void fallbackInReport(List<Product> productListShoppingCart,List<ShoppingCart> shoppingCartList) {
-        fallbackInReduceShoppingCart(productListShoppingCart);
         this.shoppingCartPersistencePort.restoreShoppingCartFromShoppingCartList(shoppingCartList);
+        this.fallbackInReduceShoppingCart(productListShoppingCart);
     }
 
 }
